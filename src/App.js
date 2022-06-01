@@ -1,5 +1,7 @@
 import {useCallback, useEffect, useState} from "react";
 import { ethers } from 'ethers';
+import ReactDOM from 'react-dom';
+import {QRCodeSVG} from 'qrcode.react';
 
 import './App.css';
 import { Button } from './components/button';
@@ -7,6 +9,7 @@ import { UserAddressDisplay } from './components/userAddressDisplay';
 import {getMaskedUserAddress, getFormattedBalance, getCurrencySymbol, getNetworkName} from "./utility";
 import {UserBalanceDisplay} from "./components/userBalanceDisplay";
 import {SelectedNetwork} from "./components/selectedNetwork";
+import copySVG from "./assets/copy.svg";
 
 
 function App() {
@@ -32,15 +35,11 @@ function App() {
         const signer = provider.getSigner();
         const account = await signer.getAddress();
         const balance = await signer.getBalance();
-        const chainId = await signer.getChainId();
         const network = await provider.getNetwork();
 
         setUserAddress(account);
         setUserBalance( getFormattedBalance(balance));
         setSelectedNetwork(network);
-
-        console.log('provider', provider,'account',account,'network',network,'chainId',chainId);
-        console.log('balance', balance, getFormattedBalance(balance));
       } else {
         alert('install meta mask extension');
       }
@@ -52,6 +51,31 @@ function App() {
     }
 
   }, [isConnected]);
+
+  const onCopyClick = () => {
+    window.navigator.clipboard.writeText(userAddress).then(()=>{
+      alert('copied');
+    }).catch((e)=>{
+      console.log(e);
+    });
+  };
+
+  const onDepositPress = () => {
+    ReactDOM.render(
+        <div className='qr-container'>
+          <QRCodeSVG value={userAddress} />
+          <div className={'text-address-container'}>
+            <span className='user-address'>{userAddress}</span>
+            <img src={copySVG} className="copy-svg" alt="copy" onClick={onCopyClick}/>
+          </div>
+        </div>,
+        document.getElementById('QR-mount-node')
+    );
+  };
+
+  const onSendPress = () => {
+
+  };
 
   return (
     <div className="App">
@@ -71,6 +95,19 @@ function App() {
             balance={userBalance}
             unit={getCurrencySymbol(selectedNetwork.chainId)}
         />
+        <footer>
+          <Button
+              label="Send"
+              onClick={onSendPress}
+          />
+          <Button
+              label="Deposit"
+              onClick={onDepositPress}
+          />
+        </footer>
+        <div id='QR-mount-node'>
+
+        </div>
       </div>  }
     </div>
   );

@@ -14,12 +14,3 @@ code {
     monospace;
 }
 
-.App {
-  border: 3px solid #000000;
-  margin: 20px;
-  min-width: 250px;
-  min-height: 350px;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-}

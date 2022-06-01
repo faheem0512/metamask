@@ -4,3 +4,37 @@
   justify-content: space-around;
   text-align: center;
 }
+footer {
+  display: flex;
+  justify-content: space-between;
+}
+.App {
+  border: 3px solid #000000;
+  margin: 20px;
+  min-width: 250px;
+  min-height: 350px;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.qr-container {
+  margin-top: 10px;
+}
+.text-address-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user-address {
+  max-width: 150px;
+  word-break: break-word;
+  font-size: 9px;
+  background: #e6e6e6;
+  padding: 7px;
+}
+.copy-svg {
+  height: 20px;
+  width: 20px;
+  margin: 0 5px;
+}
