@@ -34,9 +34,8 @@ function App() {
         setIsConnected(true);
         const signer = provider.getSigner();
         const account = await signer.getAddress();
-        const balance = await signer.getBalance();
+        const balance = await provider.send("eth_getBalance", [account,'latest']);
         const network = await provider.getNetwork();
-
         setUserAddress(account);
         setUserBalance( getFormattedBalance(balance));
         setSelectedNetwork(network);
@@ -57,6 +56,7 @@ function App() {
       alert('copied');
     }).catch((e)=>{
       console.log(e);
+      alert('copy failed');
     });
   };
 

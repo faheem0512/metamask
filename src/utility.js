@@ -8,7 +8,7 @@ export const getMaskedUserAddress = (userAddress = '') => {
 };
 
 export const getFormattedBalance = (rawBalance) => {
-    return (rawBalance / (10 ^ 18)).toFixed(3);
+    return (parseInt(rawBalance, 16) / Math.pow(10, 18)).toFixed(3);
 };
 
 export const getCurrencySymbol = (clientId) => {
