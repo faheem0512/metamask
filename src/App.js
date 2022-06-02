@@ -20,9 +20,11 @@ function App() {
   const [selectedNetwork,setSelectedNetwork] = useState({});
 
   useEffect(() => {
-    window.ethereum.on('chainChanged', () => {
-      onConnectPressORChainChange();
-    });
+    if(window.ethereum) {
+      window.ethereum.on('chainChanged', () => {
+        onConnectPressORChainChange();
+      });
+    }
   }, []);
 
   const onConnectPressORChainChange = useCallback(async () => {
